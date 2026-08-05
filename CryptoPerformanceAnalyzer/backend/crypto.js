@@ -9,6 +9,25 @@ function runAES(text) {
     return encrypted;
 }
 
+// Generate RSA keys once (for performance testing purposes)
+const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
+    modulusLength: 2048,
+});
+
+function runRSA(text) {
+    // Encrypt the text using the public key
+    const encrypted = crypto.publicEncrypt(
+        {
+            key: publicKey,
+            padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+            oaepHash: "sha256",
+        },
+        Buffer.from(text)
+    );
+    return encrypted.toString('base64');
+}
+
 module.exports = {
-    runAES
+    runAES,
+    runRSA
 };
