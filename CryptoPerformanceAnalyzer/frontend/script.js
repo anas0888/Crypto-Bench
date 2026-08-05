@@ -49,9 +49,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    storeBtn.addEventListener('click', () => {
-        // Will be implemented later
+    storeBtn.addEventListener('click', async () => {
+        if (!window.latestBenchmarkResult) {
+            alert("Please run an algorithm first.");
+            return;
+        }
+
         txSection.style.display = 'block';
-        document.getElementById('txHash').innerText = 'Loading...';
+        document.getElementById('txHash').innerText = 'Storing on blockchain... please wait.';
+
+        try {
+            const response = await fetch('http://localhost:3000/api/store', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(window.latestBenchmarkResult)
+            });
+
+            const data = await response.json();
+
+            if (data.error) {
+                document.getElementById('txHash').innerText = 'Error: ' + data.error;
+            } else {
+                document.getElementById('txHash').innerText = data.txHash;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('txHash').innerText = 'Error connecting to backend.';
+        }
     });
 });
