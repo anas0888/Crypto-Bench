@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const benchmark = require('./benchmark');
 
 const app = express();
 const PORT = 3000;
@@ -13,18 +14,16 @@ app.get('/', (req, res) => {
     res.send('Backend Running');
 });
 
-// Benchmark endpoint (dummy data for now)
+// Benchmark endpoint
 app.post('/api/benchmark', (req, res) => {
     const { algorithm, text } = req.body;
     
-    // Return dummy data as requested in Step 5
-    res.json({
-        algorithm: algorithm,
-        executionTime: "1 ms",
-        memoryUsage: "3 MB",
-        outputSize: "32 Bytes",
-        output: "sample"
-    });
+    try {
+        const result = benchmark.measurePerformance(algorithm, text);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
 
 // Start the server
