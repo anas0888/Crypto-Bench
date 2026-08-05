@@ -10,6 +10,8 @@ function measurePerformance(algorithmName, text) {
         output = cryptoLib.runAES(text);
     } else if (algorithmName === 'RSA') {
         output = cryptoLib.runRSA(text);
+    } else if (algorithmName === 'SHA256') {
+        output = cryptoLib.runSHA256(text);
     }
     // Other algorithms will be implemented in subsequent steps
 

@@ -27,7 +27,12 @@ function runRSA(text) {
     return encrypted.toString('base64');
 }
 
+function runSHA256(text) {
+    return crypto.createHash('sha256').update(text).digest('hex');
+}
+
 module.exports = {
     runAES,
-    runRSA
+    runRSA,
+    runSHA256
 };
