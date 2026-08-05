@@ -20,8 +20,13 @@ function measurePerformance(algorithmName, text) {
     const endTime = process.hrtime.bigint();
     const endMemory = process.memoryUsage().heapUsed;
 
+    // Calculate execution time in milliseconds
     const executionTimeMs = Number(endTime - startTime) / 1000000;
+    
+    // Calculate memory used in MB (heapUsed difference)
     const memoryUsedMB = Math.max(0, (endMemory - startMemory) / (1024 * 1024));
+    
+    // Calculate output size in Bytes
     const outputSizeBytes = Buffer.byteLength(output, 'utf8');
 
     return {
