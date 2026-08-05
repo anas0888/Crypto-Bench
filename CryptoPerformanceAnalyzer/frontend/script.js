@@ -39,6 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('resMemory').innerText = data.memoryUsage;
             document.getElementById('resSize').innerText = data.outputSize;
             document.getElementById('resOutput').innerText = data.output;
+            
+            // Save globally for the blockchain store function
+            window.latestBenchmarkResult = data;
 
         } catch (error) {
             console.error('Error:', error);
